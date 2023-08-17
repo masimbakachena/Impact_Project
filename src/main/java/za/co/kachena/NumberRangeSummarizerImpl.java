@@ -12,28 +12,57 @@ public class NumberRangeSummarizerImpl implements NumberRangeSummarizer{
 
     @Override
     public String summarizeCollection(Collection<Integer> input) {
-        Queue <Integer> numbersQueue = (Queue<Integer>) input;
+        List <Integer> numbersQueue = (List<Integer>)input;
         StringBuilder finalNumbersList = new StringBuilder();
-        while (!numbersQueue.isEmpty()){
-            Integer firstNumber = numbersQueue.poll();
-            Integer secondNumber = numbersQueue.peek();
+
+        for(int i= 0; i<numbersQueue.size()-1 ; i++){
+            int j = i+1;
+
+            int firstNumber = numbersQueue.get(i);
+            int secondNumber = numbersQueue.get(j);
 
             boolean isBeginningOfRange = finalNumbersList.isEmpty()||finalNumbersList.toString().endsWith(",");
-            boolean isSequential = firstNumber.equals(secondNumber-1);
+            boolean isSequential = firstNumber == secondNumber-1;
 
             if(isSequential && isBeginningOfRange){
                 finalNumbersList.append(firstNumber).append("-");
             }else if(isSequential){
-                if(numbersQueue.size()!=1){continue;}
-            }else if(numbersQueue.size()!=1){
+//                continue;
+            }else{
                 finalNumbersList.append(firstNumber).append(",");
             }
 
-            if(numbersQueue.size()==1){
+            if(j == numbersQueue.size()-1){
                 finalNumbersList.append(secondNumber);
                 break;
             }
+
         }
+
+
+//        Queue <Integer> numbersQueue = (Queue<Integer>) input;
+//        StringBuilder finalNumbersList = new StringBuilder();
+
+//        while (!numbersQueue.isEmpty()){
+//            Integer firstNumber = numbersQueue.poll();
+//            Integer secondNumber = numbersQueue.peek();
+//
+//            boolean isBeginningOfRange = finalNumbersList.isEmpty()||finalNumbersList.toString().endsWith(",");
+//            boolean isSequential = firstNumber.equals(secondNumber-1);
+//
+//            if(isSequential && isBeginningOfRange){
+//                finalNumbersList.append(firstNumber).append("-");
+//            }else if(isSequential){
+//                if(numbersQueue.size()!=1){continue;}
+//            }else if(numbersQueue.size()!=1){
+//                finalNumbersList.append(firstNumber).append(",");
+//            }
+//
+//            if(numbersQueue.size()==1){
+//                finalNumbersList.append(secondNumber);
+//                break;
+//            }
+//        }
         return finalNumbersList.toString();
     }
 }
